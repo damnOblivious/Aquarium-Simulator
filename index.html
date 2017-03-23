@@ -1,0 +1,62 @@
+<html>
+<head>
+<title>Fishy Fish</title>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+<script type="text/javascript" src="lib/webgl-obj-loader.js"></script>
+<script type="text/javascript" src="lib/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="lib/gl-matrix-min.js"></script>
+<script type="text/javascript" src="lib/webgl-utils.js"></script>
+
+<script type="text/javascript" src="basicSetup.js"></script>
+<script type="text/javascript" src="utils.js"></script>
+<script type="text/javascript" src="transformObjects.js"></script>
+<script type="text/javascript" src="shaders.js"></script>
+<script type="text/javascript" src="render.js"></script>
+<script type="text/javascript" src="createobjs.js"></script>
+<script type="text/javascript" src="camera.js"></script>
+<script type="text/javascript" src="handleKeyboardStrokes.js"></script>
+<script type="text/javascript" src="collisionChecking.js"></script>
+</head>
+
+<script id="fragShader" type="x-shader/x-fragment">
+    precision mediump float;
+    uniform sampler2D texture;
+    varying vec3 finalTextureCoords;
+
+    void main(void) {
+      gl_FragColor = texture2D(texture, vec2(finalTextureCoords.s, finalTextureCoords.t));
+    }
+</script>
+
+<script id="vertShader" type="x-shader/x-vertex">
+    attribute vec3 vertexPosition;
+    attribute vec3 textureCoords;
+    attribute vec3 normalVec;
+
+    uniform mat4 uModelMatrix;
+    uniform mat4 uProjectionMatrix;
+    uniform mat4 uViewMatrix;
+
+    varying vec3 finalTextureCoords;
+
+    void main(void) {
+        gl_Position = uProjectionMatrix * uViewMatrix * uModelMatrix * vec4(vertexPosition, 1.0);
+        finalTextureCoords = textureCoords;
+    }
+</script>
+
+<body onload="startWebGl()">
+    <canvas id="canvas1" width="600" height="600"></canvas>
+    <div id="fish1"></div>
+    <div id="fish2"></div>
+    <div id="fish3"></div>
+    <div id="fish4"></div>
+    <div id="fish5"></div>
+    <div id="fish6"></div>
+    <div id="fish7"></div>
+    <div id="egg"></div>
+    <div id="terrain"></div>
+</body>
+
+</html>
